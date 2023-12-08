@@ -14,10 +14,7 @@ class FirestoreDatabase {
     final ref = _storage.ref().child('images/${itemName}_${dateTime.toString()}.jpg');
     await ref.putFile(itemPicture);
     final itemPictureUrl = await ref.getDownloadURL();
-    
-
-
-
+  
     await _firestore.collection(collectionName).add({
       'category': collectionName,
       'name': itemName,
@@ -25,16 +22,6 @@ class FirestoreDatabase {
       'desc': desc,
       'price': price,
       'picture': itemPictureUrl,
-    });
-  }
-
-  Future<void> addItemToCart(User user, String itemName, double price) async {
-    String collectionName = "cart_for_${user.email}";
-    print(collectionName);
-
-    await _firestore.collection(collectionName).add({
-      'name': itemName,
-      'price': price,
     });
   }
 

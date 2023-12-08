@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:student_online_market/database/firebase_db.dart';
-import 'package:student_online_market/pages/cart.dart';
 import 'package:student_online_market/item_view/category_view.dart';
 import 'package:student_online_market/item_view/simple_view.dart';
 import 'package:student_online_market/pages/profile.dart';
@@ -84,7 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: SimpleView(itemName: data['name'], itemPrice: data['price'], deal: data['deal'], description: data['desc'],),
-                  // child: CartView(itemName: data['name'], itemPrice: data['price'], description: data['desc'],),
                 );
               }).toList() 
             );
