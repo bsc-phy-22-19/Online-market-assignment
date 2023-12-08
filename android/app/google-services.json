@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "740048191926",
+    "project_id": "online-market-assignment-b2b07",
+    "storage_bucket": "online-market-assignment-b2b07.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740048191926:android:3b2bf282874ddda6450117",
+        "android_client_info": {
+          "package_name": "com.example.student_online_market"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdctrsRAGDjYnIkI0hSgpqPw3qy0k0D7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
