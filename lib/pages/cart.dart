@@ -1,13 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:student_online_market/database/firebase_db.dart';
 import 'package:student_online_market/item_view/detailed_view.dart';
 import 'package:student_online_market/pages/payment_options.dart';
 
 class CartView extends StatefulWidget {
   final String itemName;
-  final int itemPrice;
-  final String description;
+  final double itemPrice;
+  final int itemsSelected;
 
-  const CartView({Key? key, required this.itemName, required this.itemPrice, required this.description}) : super(key: key);
+  const CartView({Key? key, required this.itemName, required this.itemPrice, required this.itemsSelected}) : super(key: key);
 
   @override
   State<CartView> createState() => _CartViewState();
@@ -35,7 +38,7 @@ class _CartViewState extends State<CartView> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DetailedView(itemName: widget.itemName, itemPrice: widget.itemPrice, description: widget.description,)),
+                      MaterialPageRoute(builder: (context) => DetailedView(itemName: widget.itemName, itemPrice: widget.itemPrice, description: "${widget.itemsSelected} items selected",)),
                     );
                   },
                   child: Row(
@@ -177,4 +180,33 @@ class _CartViewState extends State<CartView> {
               ),
     );
 }
+}
+
+Scaffold allCartItems() {
+  FirestoreCart db = FirestoreCart();
+  User user = FirebaseAuth.instance.currentUser!;
+
+  return Scaffold(
+    body: StreamBuilder<QuerySnapshot>(
+      stream: db.readItems(user.uid),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Center(child: Text('Something went wrong'));
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: Text('Loading'));
+        }
+        return Column(
+          children: (snapshot.data?.docs ?? []).map((DocumentSnapshot document) {
+            Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: CartView(itemName: data['itemName'], itemPrice: data['price'], itemsSelected: data['itemsSelected'],),
+            );
+          }).toList() 
+        );
+      },
+    ),
+  );
 }

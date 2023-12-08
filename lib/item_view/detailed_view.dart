@@ -4,7 +4,7 @@ import 'package:student_online_market/database/firebase_db.dart';
 
 class DetailedView extends StatefulWidget {
   final String itemName;
-  final int itemPrice;
+  final double itemPrice;
   final String description;
 
   const DetailedView({Key? key, required this.itemName, required this.itemPrice, required this.description}) : super(key: key);
@@ -129,7 +129,7 @@ class _DetailedViewState extends State<DetailedView> {
                       User user = FirebaseAuth.instance.currentUser!;
 
                       FirestoreCart db = FirestoreCart();
-                      db.createItem("Pen", user.uid, 100.5);
+                      db.createItem(widget.itemName, user.uid, widget.itemPrice);
                     },
                     child: const Text("Add to Cart"),
                   )

@@ -4,7 +4,7 @@ import 'package:student_online_market/utils/ratings.dart';
 
 class SimpleView extends StatefulWidget {
   final String itemName;
-  final int itemPrice;
+  final double itemPrice;
   final String deal;
   final String description;
 
