@@ -100,6 +100,41 @@ class FirestoreCart {
 }
 
 
+class FirestoreCategory {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final String _collectionName = 'categories';
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  Future<void> createItem(String categoryName, File itemPicture) async {
+    DateTime dateTime = DateTime.now();
+    final ref = _storage.ref().child('images/${categoryName}_${dateTime.toString()}.jpg');
+    await ref.putFile(itemPicture);
+    final itemPictureUrl = await ref.getDownloadURL();
+  
+    await _db.collection(_collectionName).add({
+      'category': categoryName,
+      'itemPictureUrl': itemPictureUrl,
+    });
+  }
+
+  Stream<QuerySnapshot<Object?>> readItems() {
+  return _db
+      .collection(_collectionName)
+      .snapshots();
+  }
+
+
+  Future<void> updateItem(String itemName, String userId) async {
+    await _db.collection(_collectionName).doc(itemName).update({
+      'userId': userId,
+      'itemName': itemName,
+    });
+  }
+
+  Future<void> deleteItem(String itemName) async {
+    await _db.collection(_collectionName).doc(itemName).delete();
+  }
+}
 
 
 

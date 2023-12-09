@@ -12,6 +12,13 @@ class PostBusiness extends StatefulWidget {
 }
 
 class _PostBusinessState extends State<PostBusiness>{
+  bool _showOverlay = false;
+
+  void _toggleOverlay() {
+    setState(() {
+      _showOverlay = !_showOverlay;
+    });
+  }
   // final _formKey = GlobalKey<FormState>();
   TextEditingController _item_name = TextEditingController();
   TextEditingController _item_price= TextEditingController();
@@ -20,10 +27,14 @@ class _PostBusinessState extends State<PostBusiness>{
   TextEditingController _item_description = TextEditingController();
   XFile? pickedFile = XFile("");
   
+  TextEditingController _category_name = TextEditingController();
+  XFile? pickedCategoryFile = XFile("");
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Color.fromARGB(255, 172, 166, 166),
         body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -37,27 +48,78 @@ class _PostBusinessState extends State<PostBusiness>{
                 reusableTextBox("Item Name", false, _item_name),
           
                 SizedBox(height: 10,),
-                reusableTextBox("Item Price", false, _item_price),
+                reusableTextBox("Item Price", true, _item_price),
           
                 SizedBox(height: 10,),
-                reusableTextBox("Item Category", false, _item_category),
-          
-                SizedBox(height: 30,),
-                reusableTextBox("Item deal (optional)", false, _item_deal),
-          
-                SizedBox(height: 10,),
-                reusableTextBox("Item description", false, _item_description),
+                if (_showOverlay)
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: Container(
+                      color: Colors.black54,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 300,
+                            height: 300,
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                TextField(
+                                  controller: _category_name,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter category name',
+                                  ),
+                                ),
+
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    pickedCategoryFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                                  }, child: const Text("Choose Picture")),
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    ElevatedButton(
+                                      child: const Text('Save'),
+                                      onPressed: () async {
+                                        final database = FirestoreCategory();
+                                        await database.createItem(
+                                          _category_name.text,
+                                          File(pickedCategoryFile!.path)
+                                        );
+                                        _toggleOverlay();
+                                    }
+                                    ),
+                                    ElevatedButton(
+                                      child: Text('Cancel'),
+                                      onPressed: _toggleOverlay,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    categoryDropDown(),
+                    Text("Select Category: "),
 
+                    SizedBox(width: 30,),
+                    categoryDropDown(),
 
                     SizedBox(width: 30,),
                     ElevatedButton(
                       onPressed: (){
-                  
+                        _toggleOverlay();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
@@ -72,12 +134,15 @@ class _PostBusinessState extends State<PostBusiness>{
                 ),
           
                 SizedBox(height: 10,),
+                reusableTextBox("Item description", false, _item_description),
+
+                SizedBox(height: 30,),
+                reusableTextBox("Item deal (optional)", false, _item_deal),
+                
+                SizedBox(height: 10,),
                 ElevatedButton(
                   onPressed: () async {
                     pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-                    // Create a reference to the location you want to upload to in Firebase Storage
-                    // String fileName = basename(pickedFile.path);
                   }, 
                   child: Text("choose item picture ...")),
 
@@ -113,6 +178,12 @@ class _PostBusinessState extends State<PostBusiness>{
 
 
 Widget categoryDropDown() {
+  Future<List<String>> getCategoryNames() async {
+
+    return ['Item 1', 'Item 2', 'Item 40', 'Item 3', 'Item 4', 'Item 5'];
+  }
+
+  
   List<String> items = ['Item 1', 'Item 2', 'Item 40', 'Item 3', 'Item 4', 'Item 5'];
   String selectedItem = items[0];
 
@@ -135,6 +206,10 @@ Widget categoryDropDown() {
     ),
   );
 }
+
+
+
+
 
 
 // Widget searchableDropdown() {

@@ -27,23 +27,28 @@ TextField reusableTextField(String text, bool isPassword, TextEditingController 
 TextField reusableTextBox(String text, bool isNumber, TextEditingController controller){
   return TextField(
     controller: controller,
-    cursorColor: Colors.white,
-    style: TextStyle(color: Colors.white.withOpacity(0.9)),
+    cursorColor: Colors.black,
+    style: TextStyle(color: Colors.black.withOpacity(0.9)),
     decoration: InputDecoration(
-      labelText: text,
-      labelStyle: TextStyle(color: Colors.white.withOpacity(0.9)),
-      filled: true,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
+      hintText: text,
+      labelStyle: TextStyle(color: Colors.black.withOpacity(0.9)),
+      filled: false,
+      floatingLabelBehavior: FloatingLabelBehavior.auto,
       fillColor: Colors.green.withOpacity(0.9),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(0.3),
-        borderSide: const BorderSide(width: 0, style: BorderStyle.none)
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(width: 1, style: BorderStyle.solid)
       ),
    ),
     keyboardType: isNumber? TextInputType.number : TextInputType.text,
   );
 }
 
+// TextField(
+//   decoration: InputDecoration(
+//     hintText: 'Enter item name',
+//   ),
+// ),
 
 
 
