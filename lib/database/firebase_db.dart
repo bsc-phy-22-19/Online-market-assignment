@@ -53,12 +53,13 @@ class FirestoreCart {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final String _collectionName = 'cart';
 
-  Future<void> createItem(String itemName, String userId, double price) async {
+  Future<void> createItem(String itemName, String userId, double price, String itemPictureUrl) async {
     await _db.collection(_collectionName).doc(itemName).set({
       'userId': userId,
       'itemName': itemName,
       'price': price,
       'itemsSelected': 1,
+      'itemPictureUrl': itemPictureUrl,
     });
   }
 

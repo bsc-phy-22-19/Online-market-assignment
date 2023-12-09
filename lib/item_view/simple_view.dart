@@ -38,19 +38,22 @@ class _SimpleViewState extends State<SimpleView> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DetailedView(itemName: widget.itemName, itemPrice: widget.itemPrice, description: widget.description,)),
+                      MaterialPageRoute(builder: (context) => DetailedView(itemName: widget.itemName, itemPrice: widget.itemPrice, description: widget.description, itemPictureUrl: widget.itemPictureUrl)),
                     );
                   },
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Image.asset("assets/static_images/sample_item.png", height: 70),
-                      CachedNetworkImage(
-                        imageUrl: widget.itemPictureUrl,
-                        placeholder: (context, url) => const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
-                        height: 70,
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child:CachedNetworkImage(
+                          imageUrl: widget.itemPictureUrl,
+                          placeholder: (context, url) => const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                          height: 70,
+                        ),
                       ),
+
                       const SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

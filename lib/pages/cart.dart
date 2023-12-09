@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,9 @@ class CartView extends StatefulWidget {
   final String itemName;
   final double itemPrice;
   final int itemsSelected;
+  final String itemPictureUrl; 
 
-  const CartView({Key? key, required this.itemName, required this.itemPrice, required this.itemsSelected}) : super(key: key);
+  const CartView({Key? key, required this.itemName, required this.itemPrice, required this.itemsSelected, required this.itemPictureUrl}) : super(key: key);
 
   @override
   State<CartView> createState() => _CartViewState();
@@ -38,13 +40,21 @@ class _CartViewState extends State<CartView> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DetailedView(itemName: widget.itemName, itemPrice: widget.itemPrice, description: "${widget.itemsSelected} items selected",)),
+                      MaterialPageRoute(builder: (context) => DetailedView(itemName: widget.itemName, itemPrice: widget.itemPrice, description: "${widget.itemsSelected} items selected", itemPictureUrl: widget.itemPictureUrl,)),
                     );
                   },
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image.asset("assets/static_images/sample_item.png", height: 70),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child:CachedNetworkImage(
+                          imageUrl: widget.itemPictureUrl,
+                          placeholder: (context, url) => const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                          height: 70,
+                        ),
+                      ),
                       const SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,12 +150,12 @@ class _CartViewState extends State<CartView> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
                           ),
-                          minimumSize: const Size(40, 40),
+                          minimumSize: const Size(30, 40),
                         ),
                         child: const Text(
                           'Buy',
                           style: TextStyle(
-                            fontSize: 19,
+                            fontSize: 17,
                             fontWeight: FontWeight.w300,
                             color: Colors.white,
                           ),
@@ -202,7 +212,7 @@ Scaffold allCartItems() {
             Map<String, dynamic> data = document.data() as Map<String, dynamic>;
             return Padding(
               padding: const EdgeInsets.all(10.0),
-              child: CartView(itemName: data['itemName'], itemPrice: data['price'], itemsSelected: data['itemsSelected'],),
+              child: CartView(itemName: data['itemName'], itemPrice: data['price'], itemsSelected: data['itemsSelected'], itemPictureUrl: data['itemPictureUrl']),
             );
           }).toList() 
         );

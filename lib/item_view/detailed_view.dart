@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:student_online_market/database/firebase_db.dart';
@@ -6,8 +7,9 @@ class DetailedView extends StatefulWidget {
   final String itemName;
   final double itemPrice;
   final String description;
+  final String itemPictureUrl; 
 
-  const DetailedView({Key? key, required this.itemName, required this.itemPrice, required this.description}) : super(key: key);
+  const DetailedView({Key? key, required this.itemName, required this.itemPrice, required this.description, required this.itemPictureUrl}) : super(key: key);
 
   @override
   State<DetailedView> createState() => _DetailedViewState();
@@ -50,7 +52,15 @@ class _DetailedViewState extends State<DetailedView> {
                         ),
                     ],
                   ),
-                  Image.asset("assets/static_images/sample_item.png", height: 140),
+                  Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child:CachedNetworkImage(
+                          imageUrl: widget.itemPictureUrl,
+                          placeholder: (context, url) => const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                          height: 140,
+                        ),
+                      ),
                 ]
               ),
               
@@ -129,7 +139,7 @@ class _DetailedViewState extends State<DetailedView> {
                       User user = FirebaseAuth.instance.currentUser!;
 
                       FirestoreCart db = FirestoreCart();
-                      db.createItem(widget.itemName, user.uid, widget.itemPrice);
+                      db.createItem(widget.itemName, user.uid, widget.itemPrice, widget.itemPictureUrl);
                     },
                     child: const Text("Add to Cart"),
                   )
