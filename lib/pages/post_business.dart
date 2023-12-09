@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:student_online_market/database/firebase_db.dart';
@@ -48,6 +47,29 @@ class _PostBusinessState extends State<PostBusiness>{
           
                 SizedBox(height: 10,),
                 reusableTextBox("Item description", false, _item_description),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    categoryDropDown(),
+
+
+                    SizedBox(width: 30,),
+                    ElevatedButton(
+                      onPressed: (){
+                  
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(20/4),
+                      ),
+                      child: Center(
+                            child: Icon(Icons.add, color: Colors.white)
+                          )
+                    ),
+                  ],
+                ),
           
                 SizedBox(height: 10,),
                 ElevatedButton(
@@ -79,8 +101,6 @@ class _PostBusinessState extends State<PostBusiness>{
                   }, child: Text("Post")),
                   ],
                 ),
-          
-                
               ],
             ),
           ),
@@ -90,4 +110,58 @@ class _PostBusinessState extends State<PostBusiness>{
     );
   }
 }
+
+
+Widget categoryDropDown() {
+  List<String> items = ['Item 1', 'Item 2', 'Item 40', 'Item 3', 'Item 4', 'Item 5'];
+  String selectedItem = items[0];
+
+  items.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+
+  return Container(
+    
+    child: DropdownButton<String>(
+      value: selectedItem,
+      items: items.map((String item) {
+        return DropdownMenuItem<String>(
+          value: item,
+          child: Text(item),
+        );
+      }).toList(),
+      onChanged: (value) {
+        // selectedItem = value;
+        print(value);
+      },
+    ),
+  );
+}
+
+
+// Widget searchableDropdown() {
+//   List<String> items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+//   String selectedItem = items[0];
+
+//   return Container(
+//     child: SelectSearchableList<String>(
+//       items: items,
+//       selectedValue: selectedItem,
+//       onChanged: (value) {
+//         selectedItem = value;
+//       },
+//       searchBoxDecoration: InputDecoration(
+//         hintText: 'Search for an item',
+//         border: OutlineInputBorder(),
+//       ),
+//       label: 'Select an item',
+//       showSelectedItemAsLabel: true,
+//       itemBuilder: (context, item, isSelected) {
+//         return ListTile(
+//           title: Text(item),
+//           selected: isSelected,
+//         );
+//       },
+//     ),
+//   );
+// }
+
 
