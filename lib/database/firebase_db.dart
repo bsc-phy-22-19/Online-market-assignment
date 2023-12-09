@@ -21,7 +21,7 @@ class FirestoreDatabase {
       'deal': deal,
       'desc': desc,
       'price': price,
-      'picture': itemPictureUrl,
+      'itemPictureUrl': itemPictureUrl,
     });
   }
 

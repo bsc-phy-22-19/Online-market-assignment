@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:student_online_market/item_view/detailed_view.dart';
 import 'package:student_online_market/utils/ratings.dart';
@@ -7,8 +8,9 @@ class SimpleView extends StatefulWidget {
   final double itemPrice;
   final String deal;
   final String description;
+  final String itemPictureUrl; 
 
-  const SimpleView({Key? key, required this.itemName, required this.itemPrice, required this.deal, required this.description}) : super(key: key);
+  const SimpleView({Key? key, required this.itemName, required this.itemPrice, required this.deal, required this.description, required this.itemPictureUrl}) : super(key: key);
 
   @override
   State<SimpleView> createState() => _SimpleViewState();
@@ -42,7 +44,13 @@ class _SimpleViewState extends State<SimpleView> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.asset("assets/static_images/sample_item.png", height: 70),
+                      // Image.asset("assets/static_images/sample_item.png", height: 70),
+                      CachedNetworkImage(
+                        imageUrl: widget.itemPictureUrl,
+                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                        height: 70,
+                      ),
                       const SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

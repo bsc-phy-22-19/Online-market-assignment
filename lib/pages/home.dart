@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Map<String, dynamic> data = document.data() as Map<String, dynamic>;
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: SimpleView(itemName: data['name'], itemPrice: data['price'], deal: data['deal'], description: data['desc'],),
+                  child: SimpleView(itemName: data['name'], itemPrice: data['price'], deal: data['deal'], description: data['desc'], itemPictureUrl: data['itemPictureUrl'],),
                 );
               }).toList() 
             );
