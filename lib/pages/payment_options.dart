@@ -14,11 +14,16 @@ class _PaymentMethodState extends State<PaymentMethod> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisSize: MainAxisSize.max,
+            // mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              paymentCard("TNM Mpamba", "088 *** 19"),
-              paymentCard("Airtel Money", "099 *** 37"),
-              paymentCard("Mo626", "100 *** 500"),
+              GridView.count(
+              crossAxisCount: 2,
+                children:[
+                  paymentCard("TNM Mpamba", "088 *** 19"),
+                  paymentCard("Airtel Money", "099 *** 37"),
+                  paymentCard("Mo626", "100 *** 500"),
+                ]
+              ),
               
             ],
           ),

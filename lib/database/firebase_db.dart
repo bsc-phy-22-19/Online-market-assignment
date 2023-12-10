@@ -122,6 +122,23 @@ class FirestoreCategory {
       .collection(_collectionName)
       .snapshots();
   }
+  
+  Future<List<List<String>>> getListOfLists() async {
+    List<List<String>> result = [];
+    await readItems().forEach((QuerySnapshot<Object?> snapshot) {
+      snapshot.docs.forEach((QueryDocumentSnapshot<Object?> doc) {
+        List<String> innerList = [];
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        data.forEach((key, value) {
+          innerList.add(value.toString());
+        });
+        result.add(innerList);
+      });
+    });
+    return result;
+  }
+
+
 
 
   Future<void> updateItem(String itemName, String userId) async {
