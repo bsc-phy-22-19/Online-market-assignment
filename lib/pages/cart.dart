@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:student_online_market/database/firebase_db.dart';
 import 'package:student_online_market/item_view/detailed_view.dart';
 import 'package:student_online_market/pages/payment_options.dart';
+import 'package:student_online_market/pages/profile.dart';
+import 'package:student_online_market/utils/reusable_widgets.dart';
 
 class CartView extends StatefulWidget {
   final String itemName;
@@ -21,7 +23,20 @@ class CartView extends StatefulWidget {
 class _CartViewState extends State<CartView> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+      appBar: ReusableAppBar(
+        title: "Online Market", 
+        onSortPressed: (){}, 
+        onProfilePressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const UserProfile()),
+          );
+        }, 
+        onSearchPressed: (){}, 
+        onCartPressed: (){}
+      ),
+      body: Container(
       child: Stack(
         children: [
           Container(
@@ -190,8 +205,12 @@ class _CartViewState extends State<CartView> {
               
               ]
               ),
+    ),
     );
-}
+    
+    
+    
+  }
 }
 
 Scaffold allCartItems() {
