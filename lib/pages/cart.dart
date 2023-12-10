@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:student_online_market/database/firebase_db.dart';
 import 'package:student_online_market/item_view/detailed_view.dart';
 import 'package:student_online_market/pages/payment_options.dart';
-import 'package:student_online_market/pages/profile.dart';
-import 'package:student_online_market/utils/reusable_widgets.dart';
 
 class CartView extends StatefulWidget {
   final String itemName;
@@ -23,23 +21,7 @@ class CartView extends StatefulWidget {
 class _CartViewState extends State<CartView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ReusableAppBar(
-        title: "Online Market", 
-        onSortPressed: (){}, 
-        onProfilePressed: (){
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const UserProfile()),
-          );
-        }, 
-        onSearchPressed: (){}, 
-        onCartPressed: (){}
-      ),
-      body: Container(
-      child: Stack(
-        children: [
-          Container(
+    return  Container(
             width: MediaQuery.of(context).size.width * 0.98,
             decoration: BoxDecoration(
               border: Border.all(
@@ -128,13 +110,6 @@ class _CartViewState extends State<CartView> {
                           ],
                         ),
 
-                        
-
-
-
-
-
-
                         Text(
                           "${widget.itemPrice}",
                           style: const TextStyle(
@@ -143,8 +118,6 @@ class _CartViewState extends State<CartView> {
                             color: Colors.black,
                           ),
                         ),
-
-                        
                         
                       ],
                     ),
@@ -187,29 +160,10 @@ class _CartViewState extends State<CartView> {
                 ),
               )
                
-            ),
-          
-
-
-
-              // Align(
-              //           alignment: Alignment.bottomRight,
-              //           child: FloatingActionButton(
-              //             onPressed: () {
-              //               // OnPressed Logic
-              //             },
-              //             child: Icon(Icons.add),
-              //             backgroundColor: Colors.blue,
-              //           ),
-              //         ),
-              
-              ]
-              ),
-    ),
-    );
+            );
+  
     
-    
-    
+   
   }
 }
 
