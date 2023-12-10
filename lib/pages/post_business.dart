@@ -178,21 +178,7 @@ class _PostBusinessState extends State<PostBusiness>{
 
 
 Widget categoryDropDown() {
-  final FirestoreCategory db = FirestoreCategory();
-  void getData() async {
-    List<List<String>> listOfLists = await db.getListOfLists();
-
-    // Now you can iterate through the listOfLists to access each item
-    print(listOfLists);
-    print("Im here");
-    for (List<String> innerList in listOfLists) {
-      print(innerList);
-      for (String item in innerList) {
-        print(item);
-      }
-    }
-  }
-  
+   
   List<String> items = ['Stationary', 'Food', 'Suit', 'Clothing', 'Books', 'Kitchen ware', 'Medicine', 'Electronics'];
   String selectedItem = items[0];
 
@@ -209,8 +195,7 @@ Widget categoryDropDown() {
         );
       }).toList(),
       onChanged: (value) {
-        // selectedItem = value;
-        print(value);
+        selectedItem = value.toString();
       },
     ),
   );
@@ -218,34 +203,5 @@ Widget categoryDropDown() {
 
 
 
-
-
-
-// Widget searchableDropdown() {
-//   List<String> items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
-//   String selectedItem = items[0];
-
-//   return Container(
-//     child: SelectSearchableList<String>(
-//       items: items,
-//       selectedValue: selectedItem,
-//       onChanged: (value) {
-//         selectedItem = value;
-//       },
-//       searchBoxDecoration: InputDecoration(
-//         hintText: 'Search for an item',
-//         border: OutlineInputBorder(),
-//       ),
-//       label: 'Select an item',
-//       showSelectedItemAsLabel: true,
-//       itemBuilder: (context, item, isSelected) {
-//         return ListTile(
-//           title: Text(item),
-//           selected: isSelected,
-//         );
-//       },
-//     ),
-//   );
-// }
 
 

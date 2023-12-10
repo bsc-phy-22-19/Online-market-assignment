@@ -45,15 +45,6 @@ TextField reusableTextBox(String text, bool isNumber, TextEditingController cont
   );
 }
 
-// TextField(
-//   decoration: InputDecoration(
-//     hintText: 'Enter item name',
-//   ),
-// ),
-
-
-
-
 
 class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
