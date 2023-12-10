@@ -46,6 +46,8 @@ dependencies:
   cached_network_image: ^3.3.0
   select_searchable_list: ^0.1.05
 
+  super_tooltip: ^1.0.0
+
 
 dev_dependencies:
   flutter_test:

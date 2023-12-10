@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:student_online_market/database/firebase_db.dart';
+import 'package:student_online_market/pages/payment_options.dart';
 
 class DetailedView extends StatefulWidget {
   final String itemName;
@@ -18,7 +19,8 @@ class DetailedView extends StatefulWidget {
 class _DetailedViewState extends State<DetailedView> {
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Scaffold(
+      body: Card(
         
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -130,7 +132,10 @@ class _DetailedViewState extends State<DetailedView> {
                 children: [
                   ElevatedButton(
                     onPressed: (){
-
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PaymentMethod()),
+                        );
                     },
                     child: const Text("Buy Now"),
                   ),
@@ -150,6 +155,7 @@ class _DetailedViewState extends State<DetailedView> {
           ),
         ),
       
-      );
-}
+      ),
+    );
+  }
 }

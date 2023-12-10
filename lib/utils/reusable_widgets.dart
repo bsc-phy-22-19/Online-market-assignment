@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:student_online_market/pages/cart.dart';
 import 'package:student_online_market/pages/home.dart';
 
+
 TextField reusableTextField(String text, bool isPassword, TextEditingController controller){
   return TextField(
     controller: controller,
@@ -123,6 +124,8 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
+
+
 
 
 

@@ -178,13 +178,22 @@ class _PostBusinessState extends State<PostBusiness>{
 
 
 Widget categoryDropDown() {
-  Future<List<String>> getCategoryNames() async {
+  final FirestoreCategory db = FirestoreCategory();
+  void getData() async {
+    List<List<String>> listOfLists = await db.getListOfLists();
 
-    return ['Item 1', 'Item 2', 'Item 40', 'Item 3', 'Item 4', 'Item 5'];
+    // Now you can iterate through the listOfLists to access each item
+    print(listOfLists);
+    print("Im here");
+    for (List<String> innerList in listOfLists) {
+      print(innerList);
+      for (String item in innerList) {
+        print(item);
+      }
+    }
   }
-
   
-  List<String> items = ['Item 1', 'Item 2', 'Item 40', 'Item 3', 'Item 4', 'Item 5'];
+  List<String> items = ['Stationary', 'Food', 'Suit', 'Clothing', 'Books', 'Kitchen ware', 'Medicine', 'Electronics'];
   String selectedItem = items[0];
 
   items.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
